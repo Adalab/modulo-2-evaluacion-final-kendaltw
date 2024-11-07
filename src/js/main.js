@@ -1,5 +1,39 @@
 'use strict';
 
+const button = document.querySelector(".js-btn");
+const input = document.querySelector(".js-input");
+let seriesList = [];
+const searchList = document.querySelector(".js-list");
+
+function showList() {
+    for (const series of seriesList) {
+        searchList.innerHTML += `
+            <li id=${series.mal_id}>  
+            <h5>${series.title}</h5>
+            <img src="${series.images.jpg.image_url}" alt="${series.title}"/>
+            </li>
+            `
+    }
+}
+
+
+
+function handleClick(ev) {
+    ev.preventDefault();
+    const inputText = input.value;
+    fetch(`https://api.jikan.moe/v4/anime?q=${inputText}`)
+        .then(response => response.json())
+        .then(info => {
+            seriesList = info.data;
+            showList();
+            console.log(seriesList);
+        })
+
+}
+
+
+button.addEventListener("click", handleClick);
+
 
 
 /* 1 Buscador de series
@@ -9,7 +43,8 @@
         -Pedir datos al servidor
         -filtrar la lista de series por el nombre con lo que se ha escrito
         -acceder/guardar los datos que necesito
-        -Pintar las series en mi html filtradas
+        -Por cada serie de la lista
+            -pintar una tarjeta en html
 
 */
 
