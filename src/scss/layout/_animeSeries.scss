@@ -1,11 +1,36 @@
+.header {
+  background-color: lightseagreen;
+  padding: 15px;
+}
 .lists {
   display: flex;
   padding: 15px;
   gap: 50px;
+  height: 100vh;
+  background-color: lightgoldenrodyellow;
+}
+.input {
+  border-radius: 5px;
+  padding: 3px;
+}
+.button {
+  border-radius: 5px;
+  padding: 3px;
+  color: white;
+  background-color: coral;
 }
 .image {
   width: 120px;
 }
 .results {
   max-width: 50vw;
+}
+.js-selected {
+  color: antiquewhite;
+  background-color: peru;
+}
+.favorites {
+  max-width: 50vw;
+  display: flex;
+  flex-direction: column;
 }
