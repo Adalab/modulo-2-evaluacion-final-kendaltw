@@ -3,19 +3,40 @@
 const button = document.querySelector(".js-btn");
 const input = document.querySelector(".js-input");
 let seriesList = [];
+let favoriteList = [];
 const searchList = document.querySelector(".js-list");
 
 function showList() {
     for (const series of seriesList) {
+        const image = series.images.jpg.image_url;
+        //añado un li a mi html
         searchList.innerHTML += `
-            <li id=${series.mal_id}>  
+            <li class="js-anime" id=${series.mal_id}>  
             <h5>${series.title}</h5>
-            <img src="${series.images.jpg.image_url}" alt="${series.title}"/>
+            <img src="${image}" class="image" alt="${series.title} "/>
             </li>
             `
+        //si no tiene imagen, intercambiamos por nueva src
+        if (image === "https://cdn.myanimelist.net/img/sp/icon/     apple-touch-icon-256.png") {
+            image.innerHTML = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV.";
+        }
+        //añado constante para recoger todas las paletas
+        const allSeries = document.querySelectorAll(".js-anime");
+        for (const anime of allSeries) {
+            anime.addEventListener("click", handleAddFavorites);
+
+        }
     }
 }
+function handleAddFavorites(event) {
+    //recojo el id de las series en las que clica
+    const idSeriesClicked = event.currentTarget.id;
+    //buscar las series clicadas a partir de ese id
+    const seriesSelected = seriesList.find((series) => {
+        return series.mal_id = idSeriesClicked;
+    })
 
+}
 
 
 function handleClick(ev) {
@@ -26,11 +47,9 @@ function handleClick(ev) {
         .then(info => {
             seriesList = info.data;
             showList();
-            console.log(seriesList);
         })
 
 }
-
 
 button.addEventListener("click", handleClick);
 
@@ -45,13 +64,14 @@ button.addEventListener("click", handleClick);
         -acceder/guardar los datos que necesito
         -Por cada serie de la lista
             -pintar una tarjeta en html
+            -si no contiene imagen, 
 
 */
 
 /* 2 Favoritos
     Cuando la usuaria haga click en una serie
-        -saber qué paleta ha clickado
-        -cambiar el estilo de esa tarjeta
+        -saber qué paleta ha clickado y guardarlo
+        -cambiar el estilo de esa tarjeta (color de fuente)
         -añadir esa serie a la lista de favoritos en localStorage
         -pintar las series seleccionadas a la izda de la pagina
  */
