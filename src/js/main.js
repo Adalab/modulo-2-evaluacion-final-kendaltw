@@ -5,13 +5,19 @@ const input = document.querySelector(".js-input");
 let seriesList = [];
 let favoriteList = [];
 const searchList = document.querySelector(".js-list");
-const favoriteSelection = document.querySelector(".js-favorites");
+let favoriteSelection = document.querySelector(".js-favorites");
 
 //1
 function showList() {
     //por cada serie de mi lista
     for (const series of seriesList) {
-        const image = series.images.jpg.image_url;
+        let image = series.images.jpg.image_url;
+
+        // si no tiene imagen, cambiamos por nueva src *******
+        if (image === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
+            console.log("que pasa");
+            image = "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
+        }
         //añado un li a mi html
         searchList.innerHTML += `
             <li class="js-anime" id=${series.mal_id}>  
@@ -19,10 +25,6 @@ function showList() {
             <img src="${image}" class="image" alt="${series.title} "/>
             </li>
             `
-        // si no tiene imagen, cambiamos por nueva src *******
-        if (image === "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
-            image = "https://images.app.goo.gl/z5Jyr9h7ozRkKmscA";
-        }
 
         //añado constante para recoger todas las series
         const allAnime = document.querySelectorAll(".js-anime");
@@ -50,7 +52,7 @@ function handleAddFavorites(event) {
     const idSeriesClicked = event.currentTarget.id;
     //buscar las series clicadas a partir de ese id
     const seriesSelected = seriesList.find((series) => {
-        return series.mal_id = idSeriesClicked;
+        return series.mal_id === parseInt(idSeriesClicked);
 
     })
     //añadir las series clicadas a mi lista de favoritos
@@ -60,12 +62,17 @@ function handleAddFavorites(event) {
     //     selection.classList.add("js-selected");
     // }
     console.log(favoriteList);
+
     //añadir lista de favoritos a local storage
     localStorage.setItem("favorites", JSON.stringify(favoriteList));
-    //recoger lista de favoritos del local storage
-    const favoritesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
+
     //pintar lista de favoritos en html
-    for (const selection of favoritesLocalStorage) {
+    favoriteSelection.innerHTML = "";
+    localFavorites();
+}
+function localFavorites() {
+    for (const selection of favoriteList) {
+
         favoriteSelection.innerHTML += `
             <li class="js-favorites" id=${selection.mal_id}>  
             <h5>${selection.title}</h5>
@@ -73,10 +80,17 @@ function handleAddFavorites(event) {
             </li>
             `
     }
-
 }
 
 
+//3 recoger lista de favoritos del local storage
+const favoritesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
+console.log(favoritesLocalStorage);
+//Si local storage tiene algo, pintar en el html nuestra lista de favoritos
+if (favoritesLocalStorage !== null) {
+    favoriteList = favoritesLocalStorage;
+    localFavorites();
+}
 
 
 
@@ -102,3 +116,6 @@ function handleAddFavorites(event) {
         -pintar las series seleccionadas a la izda de la pagina
  */
 
+/* 3 Cachear la peticion al servidor 
+    guardar los datos de la lista de favoritos en mi local storage
+*/
