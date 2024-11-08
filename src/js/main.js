@@ -48,7 +48,7 @@ function handleClick(ev) {
 }
 button.addEventListener("click", handleClick);
 
-//recojo favoritos por sus id, guardo en local storage y pinto
+//2 recojo favoritos por sus id, guardo en local storage y pinto
 function handleAddFavorites(event) {
     //recojo el id de las series en las que clica
     const idSeriesClicked = event.currentTarget.id;
@@ -88,9 +88,12 @@ function localFavorites() {
     }
 
 }
+// 5 sin terminar
 function handleXClicked(event) {
     const favorite = event.currentTarget.id;
-    console.log(event.currentTarget);
+    const indexOfFavorite = favoriteList.indexOf(favorite);
+    const eraseFavorite = favoriteList.splice(indexOfFavorite);
+    favoriteSelection.innerHTML = favoriteList;
 }
 
 //3 recoger lista de favoritos del local storage
