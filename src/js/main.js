@@ -7,7 +7,7 @@ let favoriteList = [];
 const searchList = document.querySelector(".js-list");
 let favoriteSelection = document.querySelector(".js-favorites");
 const resetButton = document.querySelector(".js-reset");
-const xButton = document.querySelector(".js-x-btn");
+
 
 //1
 function showList() {
@@ -48,7 +48,7 @@ function handleClick(ev) {
 }
 button.addEventListener("click", handleClick);
 
-
+//recojo favoritos por sus id, guardo en local storage y pinto
 function handleAddFavorites(event) {
     //recojo el id de las series en las que clica
     const idSeriesClicked = event.currentTarget.id;
@@ -70,8 +70,8 @@ function handleAddFavorites(event) {
     favoriteSelection.innerHTML = "";
     localFavorites();
 }
-
-function localFavorites(event) {
+//añado los seleccionados a la lista de favoritos
+function localFavorites() {
     for (const selection of favoriteList) {
         favoriteSelection.innerHTML += `
             <li class="list js-favorites" id=${selection.mal_id}>  
@@ -80,6 +80,15 @@ function localFavorites(event) {
             <button class="x-btn js-x-btn">X</button>
             </li>
             `
+    }
+    // 5 Al clicar en el boton x
+    const xButtons = document.querySelectorAll(".js-x-btn");
+    for (const xButton of xButtons) {
+        xButton.addEventListener("click", handleXClicked);
+    }
+    function handleXClicked(event) {
+        const favorite = event.currentTarget.xButton;
+        favoriteSelection.innerHTML -= favorite;
     }
 }
 
@@ -104,13 +113,14 @@ function handleReset(ev) {
     favoriteList = [];
 }
 
-//escucha el boton reset
+//escucho el boton reset
 resetButton.addEventListener("click", handleReset);
 
 
 
 
-//escucho el boton X
+
+
 
 
 /* 1 Buscador de series
@@ -147,10 +157,11 @@ resetButton.addEventListener("click", handleReset);
 */
 
 /* 5 BONUS x para eliminar favoritos
-    recoger los botones 
-    cuando la usuaria hace click en un boton x
-        que desaparezca de la lista de favoritos del html
-        que desaparezca del local storage
-        si está en la lista de resultados
-        -quitarle la clase de colores
+    al añadir elementos a la lista de favoritos
+        -recoger los botones 
+        -cuando la usuaria hace click en un boton x
+            -que desaparezca de la lista de favoritos del html
+            -que desaparezca del local storage
+            -si está en la lista de resultados
+            -quitarle la clase de colores
 */
