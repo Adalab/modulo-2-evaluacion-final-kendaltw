@@ -76,6 +76,7 @@ function localFavorites(event) {
             <li class="js-favorites" id=${selection.mal_id}>  
             <h5>${selection.title}</h5>
             <img src="${selection.images.jpg.image_url}" class="image" alt="${selection.title} "/>
+            <button class="x-btn js-x-btn"> X </button>
             </li>
             `
     }
@@ -140,4 +141,13 @@ resetButton.addEventListener("click", handleReset);
         -la lista de favoritos debe quedar vacía
         -el buscador debe quedar vacío
 
+*/
+
+/* 5 BONUS x para eliminar favoritos
+    recoger los botones 
+    cuando la usuaria hace click en un boton x
+        que desaparezca de la lista de favoritos del html
+        que desaparezca del local storage
+        si está en la lista de resultados
+        -quitarle la clase de colores
 */
