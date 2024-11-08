@@ -53,23 +53,23 @@ function handleAddFavorites(event) {
     //buscar las series clicadas a partir de ese id
     const seriesSelected = seriesList.find((series) => {
         return series.mal_id === parseInt(idSeriesClicked);
-
     })
+    console.log(seriesSelected);
     //añadir las series clicadas a mi lista de favoritos
-    favoriteList.push(seriesSelected); //**** 
-    //añadir una clase a esas series clicadas *******
-    // for (const selection of seriesSelected) {
-    //     selection.classList.add("js-selected");
-    // }
+    favoriteList.push(seriesSelected);
+
+    //añadir una clase a esas series clicadas *****
+    event.currentTarget.classList.toggle('js-selected');
     console.log(favoriteList);
 
     //añadir lista de favoritos a local storage
     localStorage.setItem("favorites", JSON.stringify(favoriteList));
 
-    //pintar lista de favoritos en html
+    //pintar lista de favoritos en html desde el local storage
     favoriteSelection.innerHTML = "";
     localFavorites();
 }
+
 function localFavorites() {
     for (const selection of favoriteList) {
 
@@ -85,7 +85,6 @@ function localFavorites() {
 
 //3 recoger lista de favoritos del local storage
 const favoritesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
-console.log(favoritesLocalStorage);
 //Si local storage tiene algo, pintar en el html nuestra lista de favoritos
 if (favoritesLocalStorage !== null) {
     favoriteList = favoritesLocalStorage;
