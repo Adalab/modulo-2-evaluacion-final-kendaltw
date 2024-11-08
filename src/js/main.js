@@ -7,6 +7,7 @@ let favoriteList = [];
 const searchList = document.querySelector(".js-list");
 let favoriteSelection = document.querySelector(".js-favorites");
 const resetButton = document.querySelector(".js-reset");
+const xButton = document.querySelector(".js-x-btn");
 
 //1
 function showList() {
@@ -21,7 +22,7 @@ function showList() {
         }
         //añado un li a mi html
         searchList.innerHTML += `
-            <li class="js-anime" id=${series.mal_id}>  
+            <li class="list js-anime" id=${series.mal_id}>  
             <h5>${series.title}</h5>
             <img src="${image}" class="image" alt="${series.title} "/>
             </li>
@@ -73,10 +74,10 @@ function handleAddFavorites(event) {
 function localFavorites(event) {
     for (const selection of favoriteList) {
         favoriteSelection.innerHTML += `
-            <li class="js-favorites" id=${selection.mal_id}>  
+            <li class="list js-favorites" id=${selection.mal_id}>  
             <h5>${selection.title}</h5>
             <img src="${selection.images.jpg.image_url}" class="image" alt="${selection.title} "/>
-            <button class="x-btn js-x-btn"> X </button>
+            <button class="x-btn js-x-btn">X</button>
             </li>
             `
     }
@@ -96,8 +97,8 @@ if (favoritesLocalStorage !== null) {
 //al clicar en reset vaciamos todo
 function handleReset(ev) {
     ev.preventDefault();
-    favoriteSelection.innerHTML = `<h4>Favoritas</h4>`;
-    searchList.innerHTML = `<h4>Resultados</h4>`;
+    favoriteSelection.innerHTML = `<h3 class="listTitle">Favoritas</h3>`;
+    searchList.innerHTML = `<h3 class="listTitle">Resultados</h3>`;
     input.value = "";
     localStorage.clear();
     favoriteList = [];
@@ -108,6 +109,8 @@ resetButton.addEventListener("click", handleReset);
 
 
 
+
+//escucho el boton X
 
 
 /* 1 Buscador de series
