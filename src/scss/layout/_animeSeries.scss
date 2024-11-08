@@ -2,6 +2,11 @@
   background-color: lightseagreen;
   padding: 15px;
 }
+.title {
+  color: rgb(50, 50, 50);
+  margin-bottom: 10px;
+  font-weight: bold;
+}
 .lists {
   display: flex;
   padding: 15px;
@@ -17,7 +22,13 @@
   border-radius: 5px;
   padding: 3px;
   color: white;
+  font-weight: bold;
   background-color: coral;
+}
+.reset {
+  border-radius: 5px;
+  padding: 3px;
+  background-color: lightgoldenrodyellow;
 }
 .image {
   width: 120px;
@@ -28,6 +39,7 @@
 .js-selected {
   color: antiquewhite;
   background-color: coral;
+  width: fit-content;
 }
 .favorites {
   max-width: 50vw;

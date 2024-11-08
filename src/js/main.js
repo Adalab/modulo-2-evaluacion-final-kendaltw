@@ -6,6 +6,7 @@ let seriesList = [];
 let favoriteList = [];
 const searchList = document.querySelector(".js-list");
 let favoriteSelection = document.querySelector(".js-favorites");
+const resetButton = document.querySelector(".js-reset");
 
 //1
 function showList() {
@@ -57,22 +58,20 @@ function handleAddFavorites(event) {
     console.log(seriesSelected);
     //añadir las series clicadas a mi lista de favoritos
     favoriteList.push(seriesSelected);
-
-    //añadir una clase a esas series clicadas *****
-    event.currentTarget.classList.toggle('js-selected');
     console.log(favoriteList);
 
     //añadir lista de favoritos a local storage
     localStorage.setItem("favorites", JSON.stringify(favoriteList));
 
+    //añadir una clase a esas series clicadas y añadidas a favoritos
+    event.currentTarget.classList.toggle('js-selected');
     //pintar lista de favoritos en html desde el local storage
     favoriteSelection.innerHTML = "";
     localFavorites();
 }
 
-function localFavorites() {
+function localFavorites(event) {
     for (const selection of favoriteList) {
-
         favoriteSelection.innerHTML += `
             <li class="js-favorites" id=${selection.mal_id}>  
             <h5>${selection.title}</h5>
@@ -85,11 +84,27 @@ function localFavorites() {
 
 //3 recoger lista de favoritos del local storage
 const favoritesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
+console.log(favoritesLocalStorage);
 //Si local storage tiene algo, pintar en el html nuestra lista de favoritos
 if (favoritesLocalStorage !== null) {
     favoriteList = favoritesLocalStorage;
     localFavorites();
 }
+
+
+//al clicar en reset vaciamos todo
+function handleReset(ev) {
+    ev.preventDefault();
+    favoriteSelection.innerHTML = `<h4>Favoritas</h4>`;
+    searchList.innerHTML = `<h4>Resultados</h4>`;
+    input.value = "";
+    localStorage.clear();
+    favoriteList = [];
+}
+
+//escucha el boton reset
+resetButton.addEventListener("click", handleReset);
+
 
 
 
@@ -117,4 +132,12 @@ if (favoritesLocalStorage !== null) {
 
 /* 3 Cachear la peticion al servidor 
     guardar los datos de la lista de favoritos en mi local storage
+*/
+
+/* 4 BONUS Reset
+    seleccionar el boton de mi html
+    Cuando la usuaria haga click sobre el boton reset
+        -la lista de favoritos debe quedar vacía
+        -el buscador debe quedar vacío
+
 */
