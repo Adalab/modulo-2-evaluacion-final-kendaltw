@@ -77,7 +77,7 @@ function localFavorites() {
             <li class="list js-favorites" id=${selection.mal_id}>  
             <h5>${selection.title}</h5>
             <img src="${selection.images.jpg.image_url}" class="image" alt="${selection.title} "/>
-            <button class="x-btn js-x-btn">X</button>
+            <button id=${selection.mal_id} class="x-btn js-x-btn">X</button>
             </li>
             `
     }
@@ -86,12 +86,12 @@ function localFavorites() {
     for (const xButton of xButtons) {
         xButton.addEventListener("click", handleXClicked);
     }
-    function handleXClicked(event) {
-        const favorite = event.currentTarget.xButton;
-        favoriteSelection.innerHTML -= favorite;
-    }
-}
 
+}
+function handleXClicked(event) {
+    const favorite = event.currentTarget.id;
+    console.log(event.currentTarget);
+}
 
 //3 recoger lista de favoritos del local storage
 const favoritesLocalStorage = JSON.parse(localStorage.getItem("favorites"));
@@ -106,8 +106,8 @@ if (favoritesLocalStorage !== null) {
 //al clicar en reset vaciamos todo
 function handleReset(ev) {
     ev.preventDefault();
-    favoriteSelection.innerHTML = `<h3 class="listTitle">Favoritas</h3>`;
-    searchList.innerHTML = `<h3 class="listTitle">Resultados</h3>`;
+    favoriteSelection.innerHTML = "";
+    searchList.innerHTML = "";
     input.value = "";
     localStorage.clear();
     favoriteList = [];
@@ -160,7 +160,9 @@ resetButton.addEventListener("click", handleReset);
     al añadir elementos a la lista de favoritos
         -recoger los botones 
         -cuando la usuaria hace click en un boton x
-            -que desaparezca de la lista de favoritos del html
+            -saber el id de la serie al que clicamos
+            -borrar esa serie de mi lista de favoritos
+            -volver a pintar la lista de favoritos en html
             -que desaparezca del local storage
             -si está en la lista de resultados
             -quitarle la clase de colores
